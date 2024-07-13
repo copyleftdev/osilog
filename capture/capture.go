@@ -17,8 +17,29 @@ const (
 	timeout           = pcap.BlockForever
 )
 
-func CapturePackets(interfaceName string) {
-	handle, err := pcap.OpenLive(interfaceName, snapshotLen, promiscuous, timeout)
+// CaptureInterface is an interface for capturing packets
+type CaptureInterface interface {
+	OpenLive(device string, snaplen int32, promisc bool, timeout time.Duration) (CaptureHandle, error)
+}
+
+// CaptureHandle is an interface for a handle to capture packets
+type CaptureHandle interface {
+	SetBPFFilter(filter string) error
+	Close()
+	LinkType() layers.LinkType
+	ReadPacketData() ([]byte, gopacket.CaptureInfo, error)
+}
+
+type PcapWrapper struct{}
+
+// OpenLive opens a device for live packet capture
+func (p *PcapWrapper) OpenLive(device string, snaplen int32, promisc bool, timeout time.Duration) (CaptureHandle, error) {
+	handle, err := pcap.OpenLive(device, snaplen, promisc, timeout)
+	return handle, err
+}
+
+func CapturePackets(interfaceName string, capturer CaptureInterface) {
+	handle, err := capturer.OpenLive(interfaceName, snapshotLen, promiscuous, timeout)
 	if err != nil {
 		logrus.Fatal(err)
 	}

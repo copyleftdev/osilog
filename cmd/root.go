@@ -28,6 +28,10 @@ func Execute() error {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	logger.ConfigureLogger(logLevels)
-	capture.CapturePackets(interfaceName)
+	if err := logger.ConfigureLogger(logLevels); err != nil {
+		cmd.PrintErrln(err)
+		return
+	}
+	capturer := &capture.PcapWrapper{}
+	capture.CapturePackets(interfaceName, capturer)
 }

@@ -1,13 +1,14 @@
 package logger
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/sirupsen/logrus"
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
-func ConfigureLogger(logLevels string) {
+func ConfigureLogger(logLevels string) error {
 	logrus.SetFormatter(&prefixed.TextFormatter{
 		FullTimestamp:   true,
 		ForceColors:     true,
@@ -30,7 +31,7 @@ func ConfigureLogger(logLevels string) {
 		case "error":
 			logLevelMap[logrus.ErrorLevel] = true
 		default:
-			logrus.Fatalf("Unknown log level: %s", level)
+			return fmt.Errorf("unknown log level: %s", level)
 		}
 	}
 
@@ -40,4 +41,6 @@ func ConfigureLogger(logLevels string) {
 			break
 		}
 	}
+
+	return nil
 }
