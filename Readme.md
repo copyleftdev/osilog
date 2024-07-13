@@ -1,5 +1,7 @@
 # osilog
 
+![osilog logo](./logo.png)
+
 `osilog` is a powerful network monitoring tool designed to capture and analyze network packets. It provides detailed insights into network activities, including TCP, UDP, ICMP, and ARP packets, with advanced logging features. Additionally, `osilog` can detect SSL/TLS handshake issues and alerts, making it an invaluable tool for network engineers and DevOps professionals.
 
 ## Features
@@ -116,3 +118,9 @@ We welcome contributions from the community! Feel free to fork the repository an
 - Improving existing functionalities
 - Bug fixes
 - Documentation improvements
+
+
+## Contact
+
+For any questions or issues, please open an issue on GitHub or contact the maintainers.
+y.
