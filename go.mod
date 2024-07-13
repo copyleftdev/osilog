@@ -1,4 +1,4 @@
-module osilog
+module github.com/copyleftdev/osilog
 
 go 1.22.5
 
